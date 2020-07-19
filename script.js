@@ -1,7 +1,6 @@
 // ==UserScript==
 // @name     boardgamearena
 // @include     https://boardgamearena.com/*
-// @require https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js
 // @version  1
 // @grant    none
 // ==/UserScript==
@@ -13,8 +12,7 @@ if (document.URL.includes("raceforthegalaxy") || document.URL.includes("replay")
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.onreadystatechange = function() { 
           if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            //html = $.parseHTML( xmlHttp.responseText );
-            console.log("Grabbed racepics page");
+            console.log("dundundun");
             htmlSource = xmlHttp.responseText;
           }
       }
@@ -26,15 +24,18 @@ if (document.URL.includes("raceforthegalaxy") || document.URL.includes("replay")
 
   function improveImages() {
     if (htmlSource == "") {
-      console.log("awaiting racepics html load");
+      console.log("sad");
     }
     else {
       try {
         for (const card of document.querySelectorAll(".card,.stockitem")) {
           if (!card.getAttribute("style").includes("racepics"))  {
             var cardname=card.querySelectorAll(".cardname")[0].textContent;
+            console.log(cardname);
             if (htmlSource.includes(cardname)) {
+              //html = $.parseHTML( htmlSource ); // Not worth using proper html parsing methinks
               var picloc = htmlSource.split(cardname)[1].split("alt")[0].split("src='")[1].split("'")[0];
+              console.log(picloc);
               if (card.getAttribute("class").includes("stockitem")) {
                 card.setAttribute("style", card.getAttribute("style") + "background-image:url(http://racepics.weihwa.com/" + picloc + "); background-size: 126px 174px; background-position: -7px -7px;");
               }
